@@ -1,0 +1,78 @@
+<div class="vh-100">
+  <header class="text-center mb-3">
+    <h2>Orçamentos</h2>
+  </header>
+
+  <button class="btn btn-secondary mb-2" (click)="showModalBudget()">
+    Novo Orçamento
+  </button>
+
+  @if(isModalBudget) {
+
+  <app-modal-new-budget
+    (isModalBudget)="showModalBudget()"
+    (updateData)="getAllBudgets()"
+    [budget]="budget"
+  />
+
+  }
+
+  <main>
+    <table class="table-sm table table-striped table-secondary table-hover">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Telefone</th>
+          <th>Carro</th>
+          <th>Placa</th>
+          <th>Chassis</th>
+          <th>Aberto em</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for(budget of budgets$ | async; track budget.id) {
+        <tr>
+          <td>{{ budget.clientName }}</td>
+          <td>{{ budget.clientPhone }}</td>
+          <td>{{ budget.carName }}</td>
+          <td>{{ budget.carPlate }}</td>
+          <td>{{ budget.carVin }}</td>
+          <td>{{ budget.createdAt | date : "dd/MM/yyyy HH:mm" }}</td>
+          <td class="d-flex gap-1">
+            <button
+              class="btn btn-sm btn-secondary"
+              (click)="editBudget(budget.id)"
+              title="Editar"
+            >
+              <i class="fa-solid fa-user-pen"></i>
+            </button>
+            <a
+              href="orcamentos/{{ budget.id }}"
+              class="btn btn-sm btn-primary"
+              title="Detalhes"
+              ><i class="fa-solid fa-cart-plus"></i
+            ></a>
+            <button
+              (click)="removeBudget(budget.id)"
+              class="btn-sm btn btn-danger"
+              title="Excluir"
+            >
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </td>
+        </tr>
+        }@empty {
+        <tr>
+          <td>Lista Vazia</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </main>
+</div>

@@ -1,0 +1,121 @@
+<div
+  class="modal show fade"
+  style="display: block; background-color: rgba(0, 0, 0, 0.5)"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark">
+      <header class="modal-header">
+        @if(budget !== null && !isObjectEmpty(budget)) {
+        <h2 class="modal-title">Editar Orçamento</h2>
+        } @else {
+        <h2 class="modal-title">Novo Orçamento</h2>
+        }
+
+        <button (click)="closeModal()" class="btn-close"></button>
+      </header>
+      <div class="modal-body">
+        <form
+          class="text-white"
+          (ngSubmit)="submit()"
+          [formGroup]="budgetForm"
+          #formDir="ngForm"
+        >
+          <div class="mb-2">
+            <label for="clientName">Cliente:</label>
+            <input
+              id="clientName"
+              type="text"
+              class="form-control"
+              formControlName="clientName"
+            />
+            @if(formDir.submitted) {
+            @if(budgetForm.get('clientName')?.errors?.['required']) {
+            <div class="text-danger fw-semibold">
+              <p>Informe o nome do Cliente</p>
+            </div>
+            } }
+          </div>
+
+          <div class="mb-3">
+            <label for="clientPhone">Telefone</label>
+            <input
+              id="clientPhone"
+              type="tel"
+              class="form-control"
+              id="clientPhone"
+              formControlName="clientPhone"
+            />
+            @if(formDir.submitted) {
+            @if(budgetForm.get('clientPhone')?.errors?.['required']) {
+            <div class="text-danger fw-semibold">
+              <p>Informe o Telefone</p>
+            </div>
+            } }
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="carName">Carro:</label>
+              <input
+                id="carName"
+                type="text"
+                class="form-control"
+                id="carName"
+                formControlName="carName"
+              />
+              @if(formDir.submitted) {
+              @if(budgetForm.get('carName')?.errors?.['required']) {
+              <div class="text-danger fw-semibold">
+                <p>Informe o Carro</p>
+              </div>
+              } }
+            </div>
+
+            <div class="col">
+              <label for="carPlate">Placa:</label>
+              <input
+                id="carPlate"
+                type="text"
+                class="form-control"
+                id="carPlate"
+                formControlName="carPlate"
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="carVin">Chassis:</label>
+            <input
+              id="carVin"
+              type="text"
+              class="form-control"
+              id="carVin"
+              formControlName="carVin"
+            />
+          </div>
+
+          @if(isBusy) {
+          <button class="col-12 btn btn-secondary" disabled>Salvando...</button>
+          } @else {
+          <div class="d-flex flex-nowrap align-items-center gap-2 w-100">
+            @if(budget !== null && !isObjectEmpty(budget)) {
+            <button type="submit" class="btn btn-primary w-100">Alterar</button>
+            } @else {
+            <button type="submit" class="btn btn-success w-100">Salvar</button>
+
+            }
+            <button
+              type="button"
+              (click)="closeModal()"
+              class="btn btn-danger w-100"
+            >
+              Cancelar
+            </button>
+          </div>
+          }
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
